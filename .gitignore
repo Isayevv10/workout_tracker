@@ -1,0 +1,18 @@
+# Asılılıqlar
+node_modules/
+/express.js
+
+# env files
+.env
+.env.local
+.env.development
+.env.production
+
+# Log faylları
+*.log
+npm-debug.log*
+
+# Editor faylları
+.vscode/
+*.swp
+*.swo
