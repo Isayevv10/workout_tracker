@@ -54,15 +54,15 @@ model WorkoutExercise {
 
   workout     Workout       @relation(fields: [workoutId], references: [id], onDelete: Cascade)
   exercise    Exercise      @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
-  sets        ExerciseSet[] // Hərəkətin setləri
+  sets        ExerciseSet[] 
 
   @@map("workout_exercises")
 }
 
 model ExerciseSet {
   id                  Int             @id @default(autoincrement())
-  workout_exercise_id Int             // İndi tip Int oldu və uyğunlaşdı
-  set_number          Int             // Setin nömrəsi (1, 2, 3...)
+  workout_exercise_id Int             
+  set_number          Int             
   weight              Decimal         @db.Decimal(5, 2) @default(0.00) // Qaldırılan çəki (kq)
   reps                Int             @default(0) // Təkrar sayı
   duration_seconds    Int             @default(0) // Saniyə ilə vaxt
