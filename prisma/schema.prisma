@@ -63,9 +63,9 @@ model ExerciseSet {
   id                  Int     @id @default(autoincrement())
   workout_exercise_id Int
   set_number          Int
-  weight              Decimal @default(0.00) @db.Decimal(5, 2) // Qaldırılan çəki (kq)
-  reps                Int     @default(0) // Təkrar sayı
-  duration_seconds    Int     @default(0) // Saniyə ilə vaxt
+  weight              Decimal @default(0.00) @db.Decimal(5, 2)
+  reps                Int     @default(0) 
+  duration_seconds    Int     @default(0) 
 
   workoutExercise WorkoutExercise @relation(fields: [workout_exercise_id], references: [id], onDelete: Cascade)
 
