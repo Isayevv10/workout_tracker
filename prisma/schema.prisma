@@ -4,14 +4,70 @@ generator client {
 
 datasource db {
   provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id            String   @id @default(uuid())
-  username      String   @unique @db.VarChar(50)
-  email         String   @unique @db.VarChar(100)
-  password_hash String   @db.VarChar(255)
-  created_at    DateTime @default(now())
+  id            Int       @id @default(autoincrement())
+  username      String    @unique @db.VarChar(50)
+  email         String    @unique @db.VarChar(100)
+  password_hash String    @db.VarChar(255)
+  created_at    DateTime  @default(now())
+  workouts      Workout[]
 
   @@map("users")
+}
+
+model Exercise {
+  id               Int               @id @default(autoincrement())
+  name             String            @db.VarChar(100)
+  description      String?           @db.Text
+  muscle_group     String            @db.VarChar(50)
+  category         String            @db.VarChar(50)
+  created_at       DateTime          @default(now())
+  workoutExercises WorkoutExercise[]
+
+  @@map("exercises")
+}
+
+model Workout {
+  id               Int               @id @default(autoincrement())
+  title            String            @db.VarChar(100)
+  date             DateTime          @default(now())
+  notes            String?           @db.Text
+
+  // 1. Foreign Key sütunu (bazada saxlanılacaq user id-si)
+  userId           Int
+  
+  // 1. Foreign Key sütunu (bazada saxlanılacaq user id-si)
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workoutExercises WorkoutExercise[]
+
+  @@map("workouts")
+}
+
+model WorkoutExercise {
+  id          Int           @id @default(autoincrement())
+  workoutId   Int
+  exerciseId  Int
+  order_index Int           @default(0) // Hərəkətin sıra nömrəsi
+
+  workout     Workout       @relation(fields: [workoutId], references: [id], onDelete: Cascade)
+  exercise    Exercise      @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  sets        ExerciseSet[] // Hərəkətin setləri
+
+  @@map("workout_exercises")
+}
+
+model ExerciseSet {
+  id                  Int             @id @default(autoincrement())
+  workout_exercise_id Int             // İndi tip Int oldu və uyğunlaşdı
+  set_number          Int             // Setin nömrəsi (1, 2, 3...)
+  weight              Decimal         @db.Decimal(5, 2) @default(0.00) // Qaldırılan çəki (kq)
+  reps                Int             @default(0) // Təkrar sayı
+  duration_seconds    Int             @default(0) // Saniyə ilə vaxt
+
+  workoutExercise     WorkoutExercise @relation(fields: [workout_exercise_id], references: [id], onDelete: Cascade)
+
+  @@map("exercise_sets")
 }
