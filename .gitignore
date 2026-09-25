@@ -1,6 +1,5 @@
 # Asılılıqlar
 node_modules/
-/express.js
 
 # env files
 .env
