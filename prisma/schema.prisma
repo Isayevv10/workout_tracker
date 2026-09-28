@@ -64,8 +64,8 @@ model ExerciseSet {
   workout_exercise_id Int
   set_number          Int
   weight              Decimal @default(0.00) @db.Decimal(5, 2)
-  reps                Int     @default(0) 
-  duration_seconds    Int     @default(0) 
+  reps                Int     @default(0)
+  duration_seconds    Int     @default(0)
 
   workoutExercise WorkoutExercise @relation(fields: [workout_exercise_id], references: [id], onDelete: Cascade)
 
