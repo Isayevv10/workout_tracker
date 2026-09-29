@@ -1,7 +1,12 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { workoutRouter, authRouter, exerciseRouter } from "./routes";
+import {
+  workoutRouter,
+  authRouter,
+  exerciseRouter,
+  workout_exercise,
+} from "./routes";
 import { verifyToken } from "./middlewares/auth.middleware";
 
 dotenv.config();
@@ -16,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authRouter);
 app.use("/api/workouts", verifyToken, workoutRouter);
 app.use("/api/exercise", verifyToken, exerciseRouter);
+app.use("/api/workoutExercise", verifyToken, workout_exercise);
 
 // 404 handler
 app.use((req: Request, res: Response) => {
