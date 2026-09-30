@@ -18,6 +18,7 @@ export class WorkoutExerciseService {
     const workout = await prisma.workout.findFirst({
       where: {
         id: workoutId,
+
         userId: userId,
       },
     }); // bu meshq bu userId-li istifadechiye aid oldugunu bilmek lazimdir
@@ -33,6 +34,10 @@ export class WorkoutExerciseService {
         workoutId: workoutId,
         exerciseId: data.exerciseId,
         order_index: data.order_index || 0,
+        sets: {
+          create: data.sets,
+        },
+
         // sets: {
         //   create: data.sets.map((set) => ({
         //     set_number: set.set_number,

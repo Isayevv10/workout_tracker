@@ -17,6 +17,12 @@ export const addExerciseToWorkout = async (
       return res.status(401).json({ success: false, message: "Unauthorized" });
     }
 
+    if (!exerciseId || !sets || !Array.isArray(sets) || sets.length === 0) {
+      return res.status(400).json({
+        message: "exeriseId ve set melumatlari daxil edilmelidir",
+      });
+    }
+
     const workout_exercise = await workoutExerciseService.addExerciseToWorkout(
       workoutId,
       userId,
