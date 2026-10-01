@@ -1,4 +1,5 @@
 import prisma from "../config/db";
+import { deleteWorkout } from "../controllers/workout.controller";
 
 export class WorkoutService {
   async createWorkout(userId: number, title: string, notes: string) {
@@ -30,5 +31,28 @@ export class WorkoutService {
     });
 
     return user_workouts;
+  }
+
+  async deleteWorkout(userId: number, workoutId: string) {
+    const existingWorkout = await prisma.workout.findFirst({
+      where: {
+        userId: userId,
+        id: Number(workoutId),
+      },
+    });
+
+    if (!existingWorkout) {
+      const error: any = new Error(
+        "Məşq tapılmadı və ya silməyə icazəniz yoxdur",
+      );
+      error.statusCode = 404;
+      throw error;
+    }
+
+    await prisma.workout.delete({
+      where: { id: Number(workoutId) },
+    });
+
+    return true;
   }
 }

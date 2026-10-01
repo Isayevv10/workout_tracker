@@ -44,3 +44,24 @@ export const getWorkouts = async (req: AuthRequest, res: express.Response) => {
     data: all_workouts,
   });
 };
+
+export const deleteWorkout = async (
+  req: AuthRequest,
+  res: express.Response,
+) => {
+  const userId = Number(req.user?.id);
+  const workoutId = req.params.workoutId;
+
+  if (!userId) {
+    const error: any = new Error("Unauthorized");
+    error.statusCode = 401;
+    throw error;
+  }
+
+  await workoutService.deleteWorkout(userId, String(workoutId));
+
+  return res.status(200).json({
+    success: true,
+    message: "Məşq uğurla silindi",
+  });
+};
