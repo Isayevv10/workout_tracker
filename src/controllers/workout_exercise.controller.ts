@@ -8,36 +8,30 @@ export const addExerciseToWorkout = async (
   req: AuthRequest,
   res: express.Response,
 ) => {
-  try {
-    const workoutId = parseInt(String(req.params.workoutId));
-    const userId = req.user?.id;
-    const { exerciseId, order_index, sets } = req.body;
+  const workoutId = parseInt(String(req.params.workoutId));
+  const userId = req.user?.id;
+  const { exerciseId, order_index, sets } = req.body;
 
-    if (!userId) {
-      return res.status(401).json({ success: false, message: "Unauthorized" });
-    }
+  console.log(workoutId, userId);
 
-    if (!exerciseId || !sets || !Array.isArray(sets) || sets.length === 0) {
-      return res.status(400).json({
-        message: "exeriseId ve set melumatlari daxil edilmelidir",
-      });
-    }
+  if (!userId) {
+    return res.status(401).json({ success: false, message: "Unauthorized" });
+  }
 
-    const workout_exercise = await workoutExerciseService.addExerciseToWorkout(
-      workoutId,
-      userId,
-      { exerciseId, sets, order_index },
-    );
-
-    return res.status(201).json({
-      message: "Hərəkət və setlər məşqə uğurla əlavə edildi",
-      data: workout_exercise,
-    });
-  } catch (error) {
-    console.log(error);
-
-    return res.status(500).json({
-      message: "Internal server error",
+  if (!exerciseId || !sets || !Array.isArray(sets) || sets.length === 0) {
+    return res.status(400).json({
+      message: "exeriseId ve set melumatlari daxil edilmelidir",
     });
   }
+
+  const workout_exercise = await workoutExerciseService.addExerciseToWorkout(
+    workoutId,
+    userId,
+    { exerciseId, sets, order_index },
+  );
+
+  return res.status(201).json({
+    message: "Hərəkət və setlər məşqə uğurla əlavə edildi",
+    data: workout_exercise,
+  });
 };

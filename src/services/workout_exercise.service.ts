@@ -18,12 +18,9 @@ export class WorkoutExerciseService {
     const workout = await prisma.workout.findFirst({
       where: {
         id: workoutId,
-
         userId: userId,
       },
     }); // bu meshq bu userId-li istifadechiye aid oldugunu bilmek lazimdir
-
-    console.log(workout);
 
     if (!workout) {
       throw new Error("Məşq tapılmadı və ya bu əməliyyata icazəniz yoxdur");

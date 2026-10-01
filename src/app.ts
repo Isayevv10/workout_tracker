@@ -8,6 +8,7 @@ import {
   workout_exercise,
 } from "./routes";
 import { verifyToken } from "./middlewares/auth.middleware";
+import { errorHandler } from "./middlewares/error.middleware";
 
 dotenv.config();
 
@@ -32,13 +33,6 @@ app.use((req: Request, res: Response) => {
 });
 
 // Global error handler
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  console.error(err);
-
-  res.status(err.status || 500).json({
-    success: false,
-    message: err.message || "Internal Server Error",
-  });
-});
+app.use(errorHandler);
 
 export default app;
