@@ -1,11 +1,9 @@
 import express from "express";
-import * as workoutExerciseController from "../controllers/workout_exercise.controller";
+import * as exerciseController from "../controllers/exercise.controller";
 
 const router = express.Router();
 
-router.post(
-  "/:workoutId/exercises",
-  workoutExerciseController.addExerciseToWorkout,
-);
+router.post("/create", exerciseController.createExercise);
+router.get("/getExercises", exerciseController.getExercise);
 
 export default router;

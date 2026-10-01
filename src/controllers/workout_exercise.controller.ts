@@ -12,8 +12,6 @@ export const addExerciseToWorkout = async (
   const userId = req.user?.id;
   const { exerciseId, order_index, sets } = req.body;
 
-  console.log(workoutId, userId);
-
   if (!userId) {
     return res.status(401).json({ success: false, message: "Unauthorized" });
   }
