@@ -9,17 +9,23 @@ import {
 } from "./routes";
 import { verifyToken } from "./middlewares/auth.middleware";
 import { errorHandler } from "./middlewares/error.middleware";
+import { apiLimiter, authLimiter } from "./middlewares/rateLimiter";
 
 dotenv.config();
 
 const app: Application = express();
+
+app.set("trust proxy", 1);
+
+// 1. Ümumi bütün /api sorğularına limit tətbiq edirik
+app.use("/api", apiLimiter);
 
 // Middlewares
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/auth", authRouter);
+app.use("/api/auth", authLimiter, authRouter);
 app.use("/api/workouts", verifyToken, workoutRouter);
 app.use("/api/exercise", verifyToken, exerciseRouter);
 app.use("/api/workoutExercise", verifyToken, workout_exercise);
