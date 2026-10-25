@@ -35,7 +35,8 @@ model Workout {
   title String   @db.VarChar(100)
   date  DateTime @default(now())
   notes String?  @db.Text
-
+  updatedAt DateTime  @default(now()) @updatedAt
+  
   // 1. Foreign Key sütunu (bazada saxlanılacaq user id-si)
   userId Int
 

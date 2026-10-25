@@ -40,7 +40,7 @@ export const getWorkouts = async (req: AuthRequest, res: express.Response) => {
   const all_workouts = await workoutService.getUserWorkouts(userId);
 
   return res.status(200).json({
-    success: "true",
+    success: true,
     data: all_workouts,
   });
 };
@@ -63,5 +63,41 @@ export const deleteWorkout = async (
   return res.status(200).json({
     success: true,
     message: "Məşq uğurla silindi",
+  });
+};
+
+export const updateWorkout = async (
+  req: AuthRequest,
+  res: express.Response,
+) => {
+  const workoutId = req.params.workoutId;
+  const userId = Number(req.user?.id);
+  const { title, notes } = req.body;
+
+  if (!userId) {
+    const error: any = new Error("Unauthorized");
+    error.statusCode = 401;
+    throw error;
+  }
+
+  if (!title) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Məşq başlığı (title) vacibdir" });
+  }
+
+  const updatedWorkout = await workoutService.updateWorkout(
+    userId,
+    String(workoutId),
+    {
+      title,
+      notes,
+    },
+  );
+
+  return res.status(200).json({
+    succes: true,
+    message: "Məşq uğurla yeniləndi",
+    data: updatedWorkout,
   });
 };
