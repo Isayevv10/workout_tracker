@@ -10,12 +10,15 @@ import {
 import { verifyToken } from "./middlewares/auth.middleware";
 import { errorHandler } from "./middlewares/error.middleware";
 import { apiLimiter, authLimiter } from "./middlewares/rateLimiter";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./config/swagger";
 
 dotenv.config();
 
 const app: Application = express();
 
 app.set("trust proxy", 1);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // 1. Ümumi bütün /api sorğularına limit tətbiq edirik
 app.use("/api", apiLimiter);
