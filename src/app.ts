@@ -5,7 +5,7 @@ import {
   workoutRouter,
   authRouter,
   exerciseRouter,
-  workout_exercise,
+  workoutExerciseRouter,
 } from "./routes";
 import { verifyToken } from "./middlewares/auth.middleware";
 import { errorHandler } from "./middlewares/error.middleware";
@@ -31,7 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authLimiter, authRouter);
 app.use("/api/workouts", verifyToken, workoutRouter);
 app.use("/api/exercise", verifyToken, exerciseRouter);
-app.use("/api/workoutExercise", verifyToken, workout_exercise);
+app.use("/api/workoutExercise", verifyToken, workoutExerciseRouter);
 
 // 404 handler
 app.use((req: Request, res: Response) => {

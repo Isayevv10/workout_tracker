@@ -2,14 +2,14 @@
  * @swagger
  * tags:
  *   name: Workouts
- *   description: Məşqlərin idarə olunması (CRUD)
+ *   description: Məşqlərin idarə olunması
  */
 
 /**
  * @swagger
- * /api/workouts:
+ * /api/workouts/getWorkouts:
  *   get:
- *     summary: İstifadəçiyə məxsus bütün məşqləri gətirir
+ *     summary: İstifadəçinin bütün məşqlərini gətirir
  *     tags: [Workouts]
  *     security:
  *       - BearerAuth: []
@@ -17,7 +17,12 @@
  *       200:
  *         description: Məşqlərin siyahısı uğurla qaytarıldı
  *       401:
- *         description: Token səhvdir və ya yoxdur
+ *         description: Avtorizasiya xətası
+ */
+
+/**
+ * @swagger
+ * /api/workouts/create:
  *   post:
  *     summary: Yeni məşq yaradır
  *     tags: [Workouts]
@@ -34,10 +39,10 @@
  *             properties:
  *               title:
  *                 type: string
- *                 example: "Ayaq və kürək məşqi"
+ *                 example: "Ayaq məşqi"
  *               notes:
  *                 type: string
- *                 example: "Çox ağır məşq idi"
+ *                 example: "Çox yaxşı keçdi"
  *     responses:
  *       201:
  *         description: Məşq uğurla yaradıldı
@@ -47,26 +52,7 @@
 
 /**
  * @swagger
- * /api/workouts/{id}:
- *   get:
- *     summary: ID-ə görə xüsusi məşqi gətirir
- *     tags: [Workouts]
- *     security:
- *       - BearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: integer
- *         description: Məşqin ID nömrəsi
- *     responses:
- *       200:
- *         description: Məşq tapıldı
- *       403:
- *         description: IDOR qoruması - Bu məşqə baxmaq icazəniz yoxdur
- *       404:
- *         description: Məşq tapılmadı
+ * /api/workouts/update/{workoutId}:
  *   put:
  *     summary: Məşqi yeniləyir
  *     tags: [Workouts]
@@ -74,11 +60,11 @@
  *       - BearerAuth: []
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: workoutId
  *         required: true
  *         schema:
  *           type: integer
- *         description: Yenilənəcək məşqin ID nömrəsi
+ *         description: Yenilənəcək məşqin ID-si
  *     requestBody:
  *       required: true
  *       content:
@@ -91,12 +77,19 @@
  *                 example: "Sinə məşqi (Yeniləndi)"
  *               notes:
  *                 type: string
- *                 example: "Əla keçdi"
+ *                 example: "Yaxşı idi"
  *     responses:
  *       200:
  *         description: Məşq uğurla yeniləndi
  *       403:
  *         description: İcazə yoxdur (IDOR)
+ *       404:
+ *         description: Məşq tapılmadı
+ */
+
+/**
+ * @swagger
+ * /api/workouts/{workoutId}:
  *   delete:
  *     summary: Məşqi silir
  *     tags: [Workouts]
@@ -104,16 +97,18 @@
  *       - BearerAuth: []
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: workoutId
  *         required: true
  *         schema:
  *           type: integer
- *         description: Silinəcək məşqin ID nömrəsi
+ *         description: Silinəcək məşqin ID-si
  *     responses:
  *       200:
  *         description: Məşq uğurla silindi
  *       403:
  *         description: İcazə yoxdur (IDOR)
+ *       404:
+ *         description: Məşq tapılmadı
  */
 
 import express from "express";

@@ -2,12 +2,12 @@
  * @swagger
  * tags:
  *   name: Exercises
- *   description: Məşq hərəkətlərinin (Exercise) idarə olunması
+ *   description: Məşq hərəkətlərinin idarə olunması
  */
 
 /**
  * @swagger
- * /api/exercise:
+ * /api/exercise/getExercises:
  *   get:
  *     summary: Mövcud hərəkətlərin siyahısını gətirir
  *     tags: [Exercises]
@@ -15,7 +15,14 @@
  *       - BearerAuth: []
  *     responses:
  *       200:
- *         description: Hərəkətlərin siyahısı
+ *         description: Hərəkətlərin siyahısı uğurla qaytarıldı
+ *       401:
+ *         description: Avtorizasiya xətası
+ */
+
+/**
+ * @swagger
+ * /api/exercise/create:
  *   post:
  *     summary: Yeni hərəkət əlavə edir
  *     tags: [Exercises]
@@ -39,8 +46,9 @@
  *     responses:
  *       201:
  *         description: Hərəkət uğurla yaradıldı
+ *       401:
+ *         description: Avtorizasiya xətası
  */
-
 import express from "express";
 import * as exerciseController from "../controllers/exercise.controller";
 

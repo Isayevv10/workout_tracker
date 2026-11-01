@@ -33,3 +33,28 @@ export const addExerciseToWorkout = async (
     data: workout_exercise,
   });
 };
+
+export const deleteExerciseFromWorkout = async (
+  req: AuthRequest,
+  res: express.Response,
+) => {
+  const relationId = parseInt(String(req.params.relationId));
+  const userId = req.user?.id;
+
+  if (!userId) {
+    return res.status(401).json({ success: false, message: "Unauthorized" });
+  }
+
+  if (!relationId) {
+    return res.status(400).json({
+      message: "RelationId daxil edilmelidir",
+    });
+  }
+
+  await workoutExerciseService.deleteExerciseFromWorkout(relationId, userId);
+
+  return res.status(200).json({
+    success: true,
+    message: "Meshqe aid etdiyiniz hereket uğurla silindi",
+  });
+};

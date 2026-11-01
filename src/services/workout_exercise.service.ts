@@ -48,4 +48,24 @@ export class WorkoutExerciseService {
 
     return workoutExercise;
   }
+
+  async deleteExerciseFromWorkout(relationId: number, userId: number) {
+    const relation = await prisma.workoutExercise.findUnique({
+      where: { id: relationId },
+      include: { workout: true }, // Meshqin daxilindeki istifadechi melumatini yoxlamaq uchun daxil edirem
+    });
+
+    // Eger bele bir elaqe yoxdursa ve ya meshq bashqa istifadechiye mexsusdursa, xeta atmaq
+    if (!relation || relation.workout.userId !== userId) {
+      throw new Error(
+        "Məşq hərəkəti tapılmadı və ya bu əməliyyata icazəniz yoxdur",
+      );
+    }
+
+    await prisma.workoutExercise.delete({
+      where: { id: relationId },
+    });
+
+    return true;
+  }
 }

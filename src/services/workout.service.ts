@@ -60,7 +60,7 @@ export class WorkoutService {
     workoutId: string,
     data: { title: string; notes: string },
   ) {
-    // 1. Məşqin bu istifadəçiyə aid olub-olmadığını yoxlayırıq (IDOR qoruması)
+    // Meshqin bu istifadechiye aid olub olmadigini yoxlayiriq (IDOR qoruması)
     const existingWorkout = await prisma.workout.findFirst({
       where: {
         userId: userId,
@@ -80,7 +80,7 @@ export class WorkoutService {
       where: { id: Number(workoutId) },
       data: {
         title: data.title,
-        ...(data.notes != undefined && { notes: data.notes }),
+        ...(data.notes != null && { notes: data.notes }),
       },
     });
 
