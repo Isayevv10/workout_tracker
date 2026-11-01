@@ -8,7 +8,7 @@ const options: swaggerJsdoc.Options = {
       title: "Workout Tracker API",
       version: "1.0.0",
       description:
-        "Express.js, TypeScript və Prisma ilə yazılmış peşəkar Fitness Tracker API sənədləşməsi",
+        "Express.js, TypeScript və Prisma ilə yazılmış Fitness Tracker API sənədləşməsi",
     },
     servers: [
       {
@@ -32,7 +32,7 @@ const options: swaggerJsdoc.Options = {
       },
     ],
   },
-  // Route fayllarının içindəki JSI commentləri (şərhləri) oxuması üçün yol:
+  // Route fayllarinin ichindeki JSI commentleri (sherhleri) oxumasi uchun yol:
   apis: ["./src/routes/*.ts"],
 };
 
