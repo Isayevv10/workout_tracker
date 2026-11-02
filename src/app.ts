@@ -20,7 +20,7 @@ const app: Application = express();
 app.set("trust proxy", 1);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// 1. Ümumi bütün /api sorğularına limit tətbiq edirik
+// 1. Ümumi bütün /api sorğularına limit tətbiqi
 app.use("/api", apiLimiter);
 
 // Middlewares

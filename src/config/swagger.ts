@@ -1,4 +1,3 @@
-// src/config/swagger.ts
 import swaggerJsdoc from "swagger-jsdoc";
 
 const options: swaggerJsdoc.Options = {
@@ -13,7 +12,7 @@ const options: swaggerJsdoc.Options = {
     servers: [
       {
         url: "http://localhost:3000",
-        description: "Yerli İnkişaf Serveri (Local Development)",
+        description: "Local Development",
       },
     ],
     components: {
