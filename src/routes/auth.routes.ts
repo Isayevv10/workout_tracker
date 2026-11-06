@@ -33,9 +33,9 @@ const router = express.Router();
  *               password:
  *                 type: string
  *                 example: "123456"
- *               name:
+ *               username:
  *                 type: string
- *                 example: "Elvin Məmmədov"
+ *                 example: "XXXXX YYYYYY"
  *     responses:
  *       201:
  *         description: İstifadəçi uğurla yaradıldı
