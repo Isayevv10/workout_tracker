@@ -29,8 +29,8 @@ export const verifyToken = (
 
     next();
   } catch (error) {
-    return res.status(403).json({
-      success: false,
+    return res.status(401).json({
+      auth: false,
       message: "Yanlış və ya vaxtı bitmiş token",
     });
   }
