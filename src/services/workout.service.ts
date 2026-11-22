@@ -32,6 +32,32 @@ export class WorkoutService {
     return user_workouts;
   }
 
+  async getUserWorkoutsById(userId: number, workoutId: number) {
+    const user_workout = await prisma.workout.findFirst({
+      where: {
+        id: workoutId,
+        userId: userId,
+      },
+
+      include: {
+        workoutExercises: {
+          include: {
+            exercise: true,
+            sets: true,
+          },
+        },
+      },
+    });
+
+    if (!user_workout) {
+      const error: any = new Error("Məşq tapılmadı");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    return user_workout;
+  }
+
   async deleteWorkout(userId: number, workoutId: string) {
     const existingWorkout = await prisma.workout.findFirst({
       where: {

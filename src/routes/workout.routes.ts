@@ -111,6 +111,34 @@
  *         description: Məşq tapılmadı
  */
 
+/**
+ * @swagger
+ * /api/workouts/getWorkouts/{workoutId}:
+ *   get:
+ *     summary: ID-yə görə tək məşqi gətirir
+ *     description: İstifadəçiyə məxsus məşqi hərəkətləri və setləri ilə birlikdə qaytarır
+ *     tags: [Workouts]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: workoutId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *         description: Məşqin unikal ID-si
+ *     responses:
+ *       200:
+ *         description: Məşq uğurla tapıldı
+ *       400:
+ *         description: Məşqin ID-si düzgün deyil
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: Məşq tapılmadı
+ */
+
 import express from "express";
 import * as workoutController from "../controllers/workout.controller";
 
@@ -120,5 +148,6 @@ router.delete("/:workoutId", workoutController.deleteWorkout);
 router.post("/create", workoutController.createWorkout);
 router.get("/getWorkouts", workoutController.getWorkouts);
 router.put("/update/:workoutId", workoutController.updateWorkout);
+router.get("/getWorkouts/:workoutId", workoutController.getWorkoutsById);
 
 export default router;

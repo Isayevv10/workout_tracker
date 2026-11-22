@@ -45,6 +45,42 @@ export const getWorkouts = async (req: AuthRequest, res: express.Response) => {
   });
 };
 
+export const getWorkoutsById = async (
+  req: AuthRequest,
+  res: express.Response,
+) => {
+  const userId = req.user?.id;
+  const workoutId = Number(req.params.workoutId);
+
+  if (!userId) {
+    const error: any = new Error("Unauthorized");
+    error.statusCode = 401;
+    throw error;
+  }
+
+  if (!Number.isInteger(workoutId) || workoutId <= 0) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Məşqin id-si düzgün ədəd olmalıdır" });
+  }
+
+  if (!workoutId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Məşqin id-si olmalıdır" });
+  }
+
+  const workout_by_id = await workoutService.getUserWorkoutsById(
+    userId,
+    Number(workoutId),
+  );
+
+  return res.status(200).json({
+    success: true,
+    data: workout_by_id,
+  });
+};
+
 export const deleteWorkout = async (
   req: AuthRequest,
   res: express.Response,
