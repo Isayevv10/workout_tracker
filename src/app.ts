@@ -20,11 +20,12 @@ const app: Application = express();
 app.set("trust proxy", 1);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+app.use(cors());
+
 // 1. Ümumi bütün /api sorğularına limit tətbiqi
 app.use("/api", apiLimiter);
 
 // Middlewares
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

@@ -151,7 +151,7 @@ router.post(
 
 /**
  * @swagger
- * /api/workoutExercise/{relationId}:
+ * /api/workoutExercise/{relationId}/exercise:
  *   delete:
  *     summary: Məşqə əlavə edilmiş hərəkəti (əlaqəni) silir
  *     tags: [WorkoutExercises]
