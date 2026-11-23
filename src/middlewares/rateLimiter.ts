@@ -5,6 +5,7 @@ export const apiLimiter = rateLimit({
   max: 100, // Hər IP-dən maksimum 100 sorğu
   standardHeaders: true, // Rate limit məlumatlarını header-də qaytarır
   legacyHeaders: false, // Köhnə X-RateLimit başlıqlarını söndürür
+  skip: (req) => req.method === "OPTIONS", // Preflight sorğularını sayğaca daxil etmir
   message: {
     success: false,
     message: "Çox sayda sorğu göndərildi. Zəhmət olmasa bir az gözləyin.",
@@ -17,6 +18,8 @@ export const authLimiter = rateLimit({
   max: 5, // Maksimum 5 uğursuz cəhd
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req) => req.method === "OPTIONS",
+  skipSuccessfulRequests: true, // Yalnız uğursuz (4xx/5xx) cəhdləri sayır
   message: {
     success: false,
     message:
